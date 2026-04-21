@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARNECH Research and Consulting Office</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson: #8B0000;
+    --crimson-mid: #A52A2A;
+    --gold: #C8A84B;
+    --gold-light: #E8CC80;
+    --dark: #111111;
+    --grey: #555;
+    --light-bg: #F9F6F1;
+    --white: #FFFFFF;
+    --border: rgba(139,0,0,0.15);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  /* ── PAGE SYSTEM ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--dark);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid var(--crimson);
+  }
+
+  .header-top {
+    background: var(--crimson);
+    padding: 0.4rem 2rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.85);
+  }
+  .header-top a { color: var(--gold-light); text-decoration: none; }
+
+  .header-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 2rem;
+    gap: 1rem;
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .logo span { color: var(--gold); }
+
+  nav { display: flex; gap: 0; flex-wrap: wrap; }
+
+  nav a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 0.9rem;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    transition: color 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+  nav a:hover, nav a.active { color: var(--gold); background: rgba(255,255,255,0.05); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 88vh;
+    background: var(--dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(139,0,0,0.35) 0%, transparent 70%);
+  }
+
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.1;
+    max-width: 900px;
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 em { font-style: italic; color: var(--gold); }
+
+  .hero p {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.7);
+    max-width: 680px;
+    position: relative;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+  }
+
+  .hero-actions { display: flex; gap: 1rem; justify-content: center; position: relative; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--crimson);
+    color: var(--white);
+    padding: 0.9rem 2.2rem;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--crimson-mid); transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--gold);
+    padding: 0.9rem 2.2rem;
+    border: 1px solid var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { background: var(--gold); color: var(--dark); }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--crimson);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+  }
+  .stat-item {
+    padding: 2rem 1rem;
+    border-right: 1px solid rgba(255,255,255,0.15);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 600; color: var(--gold-light); line-height: 1; }
+  .stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.75); margin-top: 0.4rem; letter-spacing: 0.05em; }
+
+  /* ── SECTION TITLES ── */
+  .section-wrap { padding: 5rem 2rem; max-width: 1280px; margin: 0 auto; }
+  .section-bg { background: var(--light-bg); }
+
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--crimson);
+    margin-bottom: 0.6rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300;
+    color: var(--dark);
+    margin-bottom: 3rem;
+    line-height: 1.2;
+  }
+
+  .section-title em { font-style: italic; color: var(--crimson); }
+
+  /* ── GRID CARDS ── */
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 1.5rem; }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    transition: box-shadow 0.25s, transform 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--crimson);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.3s;
+  }
+  .card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.1); transform: translateY(-3px); }
+  .card:hover::before { transform: scaleY(1); }
+
+  .card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--crimson);
+    margin-bottom: 0.8rem;
+  }
+  .card p { font-size: 0.9rem; color: var(--grey); line-height: 1.7; }
+
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--crimson);
+    cursor: pointer;
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .card-link:hover { gap: 0.8rem; }
+  .card-link::after { content: '→'; }
+
+  /* ── TEAM GRID ── */
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 2rem; }
+
+  .team-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: box-shadow 0.25s, transform 0.25s;
+    cursor: pointer;
+  }
+  .team-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.12); transform: translateY(-4px); }
+
+  .team-avatar {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--crimson) 100%);
+    height: 220px;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .team-avatar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7));
+  }
+
+  .avatar-initials {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -60%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.15);
+    letter-spacing: 0.05em;
+    z-index: 0;
+  }
+
+  .avatar-name {
+    position: relative;
+    z-index: 1;
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .avatar-cred {
+    position: relative;
+    z-index: 1;
+    color: var(--gold-light);
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+  }
+
+  .team-body { padding: 1.5rem; }
+  .team-role {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--crimson);
+    margin-bottom: 0.6rem;
+  }
+  .team-excerpt { font-size: 0.88rem; color: var(--grey); line-height: 1.6; }
+
+  /* ── PARTNERS ── */
+  .partners-grid { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+  .partner-chip {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 0.8rem 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--dark);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .partner-chip:hover { border-color: var(--crimson); color: var(--crimson); }
+
+  /* ── CONTACT SECTION ── */
+  .contact-section {
+    background: var(--dark);
+    color: var(--white);
+    padding: 5rem 2rem;
+  }
+  .contact-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-section .section-title { color: var(--white); }
+  .contact-section .section-label { color: var(--gold); }
+
+  .contact-detail { display: flex; flex-direction: column; gap: 1rem; font-size: 0.95rem; }
+  .contact-detail strong { color: var(--gold); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; }
+  .contact-detail a { color: rgba(255,255,255,0.8); text-decoration: none; }
+  .contact-detail a:hover { color: var(--gold); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-form input,
+  .contact-form textarea {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--white);
+    padding: 0.9rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder { color: rgba(255,255,255,0.35); }
+  .contact-form input:focus,
+  .contact-form textarea:focus { border-color: var(--gold); }
+  .contact-form textarea { height: 130px; resize: vertical; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0a0a0a;
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.8rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* ── INNER PAGE HERO ── */
+  .inner-hero {
+    background: var(--dark);
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .inner-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 20% 50%, rgba(139,0,0,0.3) 0%, transparent 70%);
+  }
+  .inner-hero-content { max-width: 1280px; margin: 0 auto; position: relative; }
+  .breadcrumb {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .breadcrumb span { color: var(--gold); cursor: pointer; }
+  .breadcrumb span:hover { text-decoration: underline; }
+  .inner-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.15;
+    max-width: 800px;
+  }
+  .inner-hero .tag {
+    display: inline-block;
+    background: var(--crimson);
+    color: var(--white);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .inner-hero .subtitle {
+    color: rgba(255,255,255,0.6);
+    font-size: 1rem;
+    margin-top: 1rem;
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  /* ── MEMBER PAGE ── */
+  .member-layout { display: grid; grid-template-columns: 340px 1fr; gap: 4rem; align-items: start; }
+  .member-sidebar {
+    background: var(--dark);
+    padding: 2.5rem;
+    color: var(--white);
+    position: sticky;
+    top: 120px;
+  }
+  .member-avatar-lg {
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, rgba(139,0,0,0.8) 0%, var(--dark) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.1);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+  .member-sidebar h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .member-sidebar .creds { color: var(--gold); font-size: 0.85rem; margin-bottom: 0.4rem; }
+  .member-sidebar .role {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .sidebar-field { margin-bottom: 1rem; }
+  .sidebar-field label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .sidebar-field p { font-size: 0.88rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
+
+  .member-content { padding-top: 3rem; }
+  .member-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--crimson);
+    margin-bottom: 1rem;
+    margin-top: 2.5rem;
+  }
+  .member-content h3:first-child { margin-top: 0; }
+  .member-content p { font-size: 0.95rem; color: var(--grey); line-height: 1.8; margin-bottom: 1rem; }
+  .edu-item {
+    border-left: 2px solid var(--crimson);
+    padding: 0.5rem 0 0.5rem 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+  .edu-degree { font-weight: 500; font-size: 0.92rem; color: var(--dark); }
+  .edu-school { font-size: 0.82rem; color: var(--grey); }
+
+  /* ── UNIT PAGE ── */
+  .unit-layout { max-width: 900px; }
+  .unit-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  .meta-chip {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--border);
+    color: var(--crimson);
+  }
+  .unit-body p { font-size: 0.97rem; color: var(--grey); line-height: 1.85; margin-bottom: 1.2rem; }
+  .unit-body h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin: 2.5rem 0 1rem;
+  }
+  .capability-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2rem; }
+  .capability-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--grey);
+  }
+  .capability-list li::before {
+    content: '◆';
+    color: var(--crimson);
+    font-size: 0.5rem;
+    margin-top: 0.45rem;
+    flex-shrink: 0;
+  }
+
+  /* ── PUBLICATIONS ── */
+  .pub-item {
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 0;
+  }
+  .pub-item:first-child { border-top: 1px solid var(--border); }
+  .pub-journal {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--crimson);
+    margin-bottom: 0.4rem;
+  }
+  .pub-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 0.4rem;
+  }
+  .pub-authors { font-size: 0.83rem; color: var(--grey); }
+
+  /* ── CAREERS ── */
+  .job-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    margin-bottom: 1.2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: start;
+  }
+  .job-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+  }
+  .job-meta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+  .job-tag { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); background: var(--light-bg); padding: 0.2rem 0.6rem; }
+  .job-desc { font-size: 0.88rem; color: var(--grey); line-height: 1.7; }
+
+  /* ── PROJECTS ── */
+  .project-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.25s;
+  }
+  .project-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+  .project-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: rgba(139,0,0,0.08);
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    line-height: 1;
+  }
+  .project-partner { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--crimson); margin-bottom: 0.8rem; }
+  .project-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    max-width: 85%;
+  }
+  .project-desc { font-size: 0.88rem; color: var(--grey); line-height: 1.7; }
+
+  /* ── ABOUT ── */
+  .about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .about-text p { font-size: 0.97rem; color: var(--grey); line-height: 1.85; margin-bottom: 1.2rem; }
+  .about-visual {
+    background: var(--dark);
+    padding: 3rem;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+  .about-visual::before {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    background: rgba(139,0,0,0.2);
+    border-radius: 50%;
+    top: -80px; right: -80px;
+  }
+  .about-visual h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+    position: relative;
+  }
+  .about-visual p { font-size: 0.88rem; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 2rem; position: relative; }
+
+  /* responsive */
+  @media (max-width: 900px) {
+    .member-layout { grid-template-columns: 1fr; }
+    .member-sidebar { position: static; }
+    .about-layout { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .header-main { flex-direction: column; align-items: flex-start; }
+    nav a { font-size: 0.72rem; padding: 0.5rem 0.6rem; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════ HEADER ════════════════════════ -->
+<header>
+  <div class="header-top">
+    <a href="mailto:info@arnechresearch.com">info@arnechresearch.com</a>
+    <span>+257 71687829 (Burundi)</span>
+    <span>+44 74765776 29 (England)</span>
+  </div>
+  <div class="header-main">
+    <a class="logo" onclick="navigate('home')">ARNECH <span>Research</span></a>
+    <nav>
+      <a onclick="navigate('home')" data-page="home">Home</a>
+      <a onclick="navigate('about')" data-page="about">About</a>
+      <a onclick="navigate('services')" data-page="services">Services</a>
+      <a onclick="navigate('team')" data-page="team">Team</a>
+      <a onclick="navigate('units')" data-page="units">Units</a>
+      <a onclick="navigate('projects')" data-page="projects">Projects</a>
+      <a onclick="navigate('publications')" data-page="publications">Publications</a>
+      <a onclick="navigate('careers')" data-page="careers">Careers</a>
+      <a onclick="navigate('contact')" data-page="contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ════════════════════════ PAGE: HOME ════════════════════════ -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-eyebrow">Bujumbura · London · Global</div>
+    <h1>Excellence in Research &<br><em>Strategic Consulting</em></h1>
+    <p>ARNECH advances knowledge and drives innovation by providing research services and strategic consulting to organizations, institutions, and governments across Africa and beyond.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="navigate('services')">Our Services</button>
+      <button class="btn-outline" onclick="navigate('contact')">Get in Touch</button>
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num">30+</div><div class="stat-label">Research Projects</div></div>
+    <div class="stat-item"><div class="stat-num">10+</div><div class="stat-label">Countries Served</div></div>
+    <div class="stat-item"><div class="stat-num">5+</div><div class="stat-label">Years of Excellence</div></div>
+    <div class="stat-item"><div class="stat-num">15+</div><div class="stat-label">Strategic Partners</div></div>
+  </div>
+
+  <div class="section-bg">
+    <div class="section-wrap">
+      <div class="section-label">What we do</div>
+      <div class="section-title">Core <em>Services</em></div>
+      <div class="grid-3">
+        <div class="card"><h3>Research Design & Implementation</h3><p>Comprehensive research studies using cutting-edge methodologies across health, education, and social sciences.</p><a class="card-link" onclick="navigate('services')">Learn more</a></div>
+        <div class="card"><h3>Strategic Consulting</h3><p>Evidence-based strategic guidance to improve projects and navigate complex challenges in evolving landscapes.</p><a class="card-link" onclick="navigate('services')">Learn more</a></div>
+        <div class="card"><h3>Data Analytics & Insights</h3><p>Transforming complex data into actionable insights using advanced analytical and machine learning techniques.</p><a class="card-link" onclick="navigate('services')">Learn more</a></div>
+        <div class="card"><h3>Policy Analysis & Development</h3><p>Analyzing policies and developing frameworks for public health, education, and social policy challenges.</p><a class="card-link" onclick="navigate('services')">Learn more</a></div>
+        <div class="card"><h3>Capacity Building & Training</h3><p>Customized training programs and mentorship initiatives that build institutional capacity for sustainable impact.</p><a class="card-link" onclick="navigate('services')">Learn more</a></div>
+        <div class="card"><h3>Grant Writing & Funding Support</h3><p>Compelling grant proposals and funding strategies with a proven track record of successful applications.</p><a class="card-link" onclick="navigate('services')">Learn more</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-wrap">
+    <div class="section-label">Our People</div>
+    <div class="section-title">Expert <em>Team</em></div>
+    <div class="team-grid">
+      <div class="team-card" onclick="navigate('member-nestor')">
+        <div class="team-avatar"><div class="avatar-initials">NN</div><div><div class="avatar-name">Nestor Ntakaburimvo</div><div class="avatar-cred">MSc, BSc</div></div></div>
+        <div class="team-body"><div class="team-role">Co-founder & Managing Director</div><p class="team-excerpt">7 years in healthcare data management, M&E. Former MEL Lead at ICAP Columbia University / USAID.</p><a class="card-link">View profile</a></div>
+      </div>
+      <div class="team-card" onclick="navigate('member-arnaud')">
+        <div class="team-avatar"><div class="avatar-initials">AI</div><div><div class="avatar-name">Dr. Arnaud Iradukunda</div><div class="avatar-cred">MD, MSc, BSc</div></div></div>
+        <div class="team-body"><div class="team-role">Co-founder & Research Coordinator</div><p class="team-excerpt">6+ years in public health research. Oxford MSc, Harvard Post-doctorate, MD University of Burundi.</p><a class="card-link">View profile</a></div>
+      </div>
+      <div class="team-card" onclick="navigate('member-gildas')">
+        <div class="team-avatar"><div class="avatar-initials">GI</div><div><div class="avatar-name">Gildas Irakoze</div><div class="avatar-cred">MSc, MSc, BSc</div></div></div>
+        <div class="team-body"><div class="team-role">MEL Specialist & Lead, Social & Economic Unit</div><p class="team-excerpt">10+ years in international development and rural economics. Multilingual agricultural economist.</p><a class="card-link">View profile</a></div>
+      </div>
+      <div class="team-card" onclick="navigate('member-cheilla')">
+        <div class="team-avatar"><div class="avatar-initials">CI</div><div><div class="avatar-name">Cheilla Izere</div><div class="avatar-cred">MSc, BSc</div></div></div>
+        <div class="team-body"><div class="team-role">Co-founder & Biostatistician & AI Expert</div><p class="team-excerpt">Biostatistician & AI professional. Data Analyst Researcher at Carleton University. Expert in statistical modeling.</p><a class="card-link">View profile</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-bg">
+    <div class="section-wrap">
+      <div class="section-label">Partnerships</div>
+      <div class="section-title">Our <em>Partners</em></div>
+      <div class="partners-grid">
+        <div class="partner-chip">Library without Borders</div>
+        <div class="partner-chip">Netherlands Embassy in Burundi</div>
+        <div class="partner-chip">ABUBEF</div>
+        <div class="partner-chip">WHO Burundi</div>
+        <div class="partner-chip">Burundi Ministry of Health</div>
+        <div class="partner-chip">Kaizen Company</div>
+        <div class="partner-chip">Harvard University</div>
+        <div class="partner-chip">African Economic Research Consortium</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section">
+    <div class="contact-inner">
+      <div>
+        <div class="section-label" style="color:var(--gold)">Get in touch</div>
+        <div class="section-title" style="color:var(--white)">Ready to <em>collaborate?</em></div>
+        <div class="contact-detail">
+          <div><strong>Email</strong><a href="mailto:info@arnechresearch.com">info@arnechresearch.com</a></div>
+          <div><strong>Burundi Office</strong><a href="tel:+25771687829">+257 71687829</a></div>
+          <div><strong>England Office</strong><a href="tel:+447476577629">+44 74765776 29</a></div>
+          <div><strong>Address</strong><span style="color:rgba(255,255,255,0.7)">Bujumbura, Rohero, No 503, Premium House (ECOBANK Burundi HQ)</span></div>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="handleForm(event)">
+        <input type="text" placeholder="Your Name *" required>
+        <input type="email" placeholder="Email Address *" required>
+        <input type="text" placeholder="Organisation">
+        <textarea placeholder="Tell us about your research or consulting needs…" required></textarea>
+        <button type="submit" class="btn-primary">Send Message</button>
+      </form>
+    </div>
+  </div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved. · Advancing Knowledge, Driving Innovation.</p></footer>
+</div>
+
+<!-- ════════════════════════ PAGE: ABOUT ════════════════════════ -->
+<div id="page-about" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / About</div>
+      <div class="tag">About ARNECH</div>
+      <h1>Bridging Research &<br>Practical Implementation</h1>
+      <p class="subtitle">Founded by a multidisciplinary team of researchers and consultants committed to evidence-based development across Africa and globally.</p>
+    </div>
+  </div>
+  <div class="section-wrap">
+    <div class="about-layout">
+      <div class="about-text">
+        <div class="section-label">Our Mission</div>
+        <div class="section-title">Why <em>ARNECH</em> Exists</div>
+        <p>ARNECH Research and Consulting advances knowledge and drives innovation by providing research services and strategic consulting to organizations, institutions, and governments. We bridge the gap between academic research and practical implementation across Africa and beyond.</p>
+        <p>Founded by a team of researchers with expertise spanning medicine, statistics, economics, and data science, ARNECH brings rigorous academic standards to real-world challenges.</p>
+        <p>Our interdisciplinary approach ensures that research findings translate into actionable policies and programs that improve lives — from reducing disease burden to strengthening financial inclusion and building community resilience.</p>
+      </div>
+      <div class="about-visual">
+        <h3>Our Vision</h3>
+        <p>To be a leading research and consulting organisation that transforms evidence into action for sustainable development and improved health outcomes in Africa and globally.</p>
+        <h3>Our Values</h3>
+        <p>Rigour · Integrity · Innovation · Collaboration · Impact</p>
+        <h3>Our Reach</h3>
+        <p>Burundi · East Africa · Sub-Saharan Africa · Europe · North America</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-bg">
+    <div class="section-wrap">
+      <div class="section-label">Our Partners</div>
+      <div class="section-title">Trusted <em>Collaborators</em></div>
+      <div class="partners-grid">
+        <div class="partner-chip">Library without Borders<br><small style="color:var(--grey);font-size:0.72rem">Educational access & knowledge sharing</small></div>
+        <div class="partner-chip">Netherlands Embassy in Burundi<br><small style="color:var(--grey);font-size:0.72rem">Diplomatic & international development</small></div>
+        <div class="partner-chip">ABUBEF<br><small style="color:var(--grey);font-size:0.72rem">Community development & capacity building</small></div>
+        <div class="partner-chip">WHO Burundi<br><small style="color:var(--grey);font-size:0.72rem">Public health research & policy</small></div>
+        <div class="partner-chip">Burundi Ministry of Health<br><small style="color:var(--grey);font-size:0.72rem">Sexual, reproductive & maternal health</small></div>
+        <div class="partner-chip">Kaizen Company<br><small style="color:var(--grey);font-size:0.72rem">Entrepreneurship & innovation technology</small></div>
+      </div>
+    </div>
+  </div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- ════════════════════════ PAGE: SERVICES ════════════════════════ -->
+<div id="page-services" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / Services</div>
+      <div class="tag">Services</div>
+      <h1>Research & Consulting<br><em>Solutions</em></h1>
+      <p class="subtitle">From study design to policy implementation — comprehensive support across the research and consulting lifecycle.</p>
+    </div>
+  </div>
+  <div class="section-wrap">
+    <div class="grid-3">
+      <div class="card"><h3>Research Design & Implementation</h3><p>We design and execute comprehensive research studies using cutting-edge methodologies. Our interdisciplinary approach ensures robust findings that inform policy and practice across health, education, and social sciences. We cover qualitative, quantitative, and mixed-methods designs.</p></div>
+      <div class="card"><h3>Strategic Consulting</h3><p>Expert consultants provide strategic guidance to organisations seeking to improve their projects, implement evidence-based practices, and navigate complex challenges. We support NGOs, governments, international agencies, and private sector actors.</p></div>
+      <div class="card"><h3>Data Analytics & Insights</h3><p>We transform complex data into actionable insights using advanced analytical techniques — statistical modelling, machine learning, and data visualisation — helping clients make informed decisions grounded in solid evidence.</p></div>
+      <div class="card"><h3>Policy Analysis & Development</h3><p>We analyse existing policies and develop new frameworks addressing contemporary challenges. Our expertise spans public health, education, and social policy, with a special focus on low- and middle-income country contexts.</p></div>
+      <div class="card"><h3>Capacity Building & Training</h3><p>Customised training programs, workshops, and mentorship initiatives that strengthen local capabilities and ensure sustainable impact. We design bespoke curricula aligned to organisational needs and local contexts.</p></div>
+      <div class="card"><h3>Grant Writing & Funding Support</h3><p>Our experienced team assists organisations in securing funding through compelling grant proposals and funding strategies. We have a proven track record of successful applications to major international funding agencies.</p></div>
+      <div class="card"><h3>Monitoring & Evaluation</h3><p>End-to-end M&E framework design, implementation, and reporting. We build systems for routine data collection, indicator tracking, and programme performance assessment aligned to donor and government requirements.</p></div>
+      <div class="card"><h3>Disease Modelling & Forecasting</h3><p>Mathematical and statistical models for infectious disease dynamics, outbreak analysis, and epidemic forecasting. We provide scenario-based analyses to support public health decision-making and resource allocation.</p></div>
+      <div class="card"><h3>Digital Health Solutions</h3><p>Development of health information systems, digital tools, and innovative technologies for improving healthcare delivery in resource-limited settings, including mobile health and data management platforms.</p></div>
+    </div>
+  </div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- ════════════════════════ PAGE: TEAM ════════════════════════ -->
+<div id="page-team" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / Team</div>
+      <div class="tag">Expert Team</div>
+      <h1>The People Behind<br><em>ARNECH</em></h1>
+      <p class="subtitle">A multidisciplinary team of researchers, data scientists, and consultants with deep expertise across global health, economics, and data science.</p>
+    </div>
+  </div>
+  <div class="section-wrap">
+    <div class="team-grid">
+      <div class="team-card" onclick="navigate('member-nestor')">
+        <div class="team-avatar"><div class="avatar-initials">NN</div><div><div class="avatar-name">Nestor Ntakaburimvo</div><div class="avatar-cred">MSc, BSc</div></div></div>
+        <div class="team-body"><div class="team-role">Co-founder & Managing Director</div><p class="team-excerpt">7 years in healthcare data management, analysis, and M&E. MEL Lead for HIV Care at ICAP Columbia University / USAID (2023–2025).</p><a class="card-link">View full profile</a></div>
+      </div>
+      <div class="team-card" onclick="navigate('member-arnaud')">
+        <div class="team-avatar"><div class="avatar-initials">AI</div><div><div class="avatar-name">Dr. Arnaud Iradukunda</div><div class="avatar-cred">MD, MSc, BSc</div></div></div>
+        <div class="team-body"><div class="team-role">Co-founder & Research Coordinator</div><p class="team-excerpt">6+ years in public health research. MD (University of Burundi), MSc Modelling for Global Health (Oxford), Post-doctorate (Harvard).</p><a class="card-link">View full profile</a></div>
+      </div>
+      <div class="team-card" onclick="navigate('member-gildas')">
+        <div class="team-avatar"><div class="avatar-initials">GI</div><div><div class="avatar-name">Gildas Irakoze</div><div class="avatar-cred">MSc, MSc, BSc</div></div></div>
+        <div class="team-body"><div class="team-role">MEL Specialist & Lead, Social & Economic Unit</div><p class="team-excerpt">10+ years in international development, rural economics, and agriculture. Multilingual expert in impact evaluation and financial inclusion.</p><a class="card-link">View full profile</a></div>
+      </div>
+      <div class="team-card" onclick="navigate('member-cheilla')">
+        <div class="team-avatar"><div class="avatar-initials">CI</div><div><div class="avatar-name">Cheilla Izere</div><div class="avatar-cred">MSc, BSc</div></div></div>
+        <div class="team-body"><div class="team-role">Co-founder & Biostatistician & AI Expert</div><p class="team-excerpt">Biostatistician and AI professional. Currently Data Analyst Researcher at Carleton University. Expert in statistical modelling and machine learning for global health.</p><a class="card-link">View full profile</a></div>
+      </div>
+    </div>
+  </div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- ════════════════════════ PAGE: MEMBER — NESTOR ════════════════════════ -->
+<div id="page-member-nestor" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / <span onclick="navigate('team')">Team</span> / Nestor Ntakaburimvo</div>
+    </div>
+  </div>
+  <div class="section-wrap">
+    <div class="member-layout">
+      <div class="member-sidebar">
+        <div class="member-avatar-lg">NN</div>
+        <h2>Nestor Ntakaburimvo</h2>
+        <div class="creds">MSc, BSc</div>
+        <div class="role">Co-founder & Managing Director</div>
+        <div class="sidebar-field"><label>Expertise</label><p>Healthcare Data Management · M&E · Data Visualisation · Statistical Analysis · USAID Programming</p></div>
+        <div class="sidebar-field"><label>Languages</label><p>Kirundi · French · English</p></div>
+        <div class="sidebar-field"><label>Location</label><p>Bujumbura, Burundi</p></div>
+        <div class="sidebar-field"><label>Contact</label><p><a href="mailto:info@arnechresearch.com" style="color:var(--gold)">info@arnechresearch.com</a></p></div>
+      </div>
+      <div class="member-content">
+        <h3>Professional Summary</h3>
+        <p>Nestor Ntakaburimvo is a results-oriented professional with 7 years of experience in healthcare data management, analysis, and Monitoring, Evaluation & Learning (MEL) practices. He co-founded ARNECH with a vision to translate rigorous data systems into actionable health programme insights across Burundi and the wider region.</p>
+        <p>His career has spanned major USAID-funded programmes, where he developed and managed comprehensive data pipelines, led indicator reporting, and supported evidence-based programme adaptation at scale. Nestor is known for his ability to bridge technical data expertise with strategic programme management.</p>
+
+        <h3>Professional Experience</h3>
+        <div class="edu-item">
+          <div class="edu-degree">Monitoring, Evaluation and Learning Lead — HIV Care & Treatment</div>
+          <div class="edu-school">ICAP Columbia University / USAID Project · 2023–2025</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">Data and Analytics Manager</div>
+          <div class="edu-school">Pathfinder International TUBITEHO / USAID Project · 2019–2023</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">Data Analyst</div>
+          <div class="edu-school">Institut Burundais d'Évaluation · 2018–2019</div>
+        </div>
+
+        <h3>Education</h3>
+        <div class="edu-item">
+          <div class="edu-degree">MSc in Monitoring and Evaluation</div>
+          <div class="edu-school">Makerere University, Uganda</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">BSc in Statistics</div>
+          <div class="edu-school">University of Lake Tanganyika, Burundi</div>
+        </div>
+
+        <h3>Areas of Expertise</h3>
+        <ul class="capability-list">
+          <li>M&E framework design and implementation for USAID and donor-funded health programmes</li>
+          <li>Healthcare data management systems (DHIS2, ODK, REDCap)</li>
+          <li>Data visualisation and dashboard development (Power BI, Tableau)</li>
+          <li>Statistical analysis and indicator tracking for HIV, maternal health, and family planning programmes</li>
+          <li>Capacity building for national M&E systems and local data teams</li>
+          <li>Performance-based financing and results reporting</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- ════════════════════════ PAGE: MEMBER — ARNAUD ════════════════════════ -->
+<div id="page-member-arnaud" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / <span onclick="navigate('team')">Team</span> / Dr. Arnaud Iradukunda</div>
+    </div>
+  </div>
+  <div class="section-wrap">
+    <div class="member-layout">
+      <div class="member-sidebar">
+        <div class="member-avatar-lg">AI</div>
+        <h2>Dr. Arnaud Iradukunda</h2>
+        <div class="creds">MD, MSc, BSc</div>
+        <div class="role">Co-founder & Research Coordinator</div>
+        <div class="sidebar-field"><label>Expertise</label><p>Global Health Research · Disease Modelling · Bioethics · Epidemiology · Public Health Policy</p></div>
+        <div class="sidebar-field"><label>Languages</label><p>Kirundi · French · English</p></div>
+        <div class="sidebar-field"><label>Affiliation</label><p>Harvard University (Post-doctorate) · University of Oxford (MSc)</p></div>
+        <div class="sidebar-field"><label>Contact</label><p><a href="mailto:info@arnechresearch.com" style="color:var(--gold)">info@arnechresearch.com</a></p></div>
+      </div>
+      <div class="member-content">
+        <h3>Professional Summary</h3>
+        <p>Dr. Arnaud Iradukunda is a leading researcher with over 6 years of experience in public health research and consulting. As co-founder and Research Coordinator of ARNECH, he directs the organisation's scientific strategy and ensures methodological rigour across all research programmes.</p>
+        <p>Trained at some of the world's most prestigious institutions — including the University of Oxford and Harvard University — Dr. Arnaud specialises in mathematical modelling for global health, disease epidemiology, and evidence-based policy development. He has contributed to landmark publications in journals including <em>The Lancet</em>, <em>The Lancet Neurology</em>, and <em>BMC Infectious Diseases</em>.</p>
+
+        <h3>Education</h3>
+        <div class="edu-item">
+          <div class="edu-degree">Post-doctorate in Global Health</div>
+          <div class="edu-school">Harvard University, USA</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">MSc in Modelling for Global Health</div>
+          <div class="edu-school">University of Oxford, United Kingdom</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">International Certificate in Bioethics</div>
+          <div class="edu-school">University of Haifa, Israel</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">Doctorate in Medicine (MD)</div>
+          <div class="edu-school">University of Burundi</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">BSc in Statistics</div>
+          <div class="edu-school">University of Lake Tanganyika, Burundi</div>
+        </div>
+
+        <h3>Areas of Expertise</h3>
+        <ul class="capability-list">
+          <li>Mathematical modelling of infectious diseases (TB, Malaria, Measles, COVID-19)</li>
+          <li>Epidemiological study design and analysis</li>
+          <li>Global burden of disease research</li>
+          <li>Vaccine effectiveness modelling and immunisation policy</li>
+          <li>Bioethics and research governance</li>
+          <li>Health systems strengthening and policy analysis</li>
+          <li>Scientific writing and publication in peer-reviewed journals</li>
+        </ul>
+
+        <h3>Selected Publications</h3>
+        <div class="pub-item">
+          <div class="pub-journal">BMC Infectious Diseases · 2025</div>
+          <div class="pub-title">Tuberculosis mortality and drug resistance in Burundi</div>
+          <div class="pub-authors">Iradukunda A. et al.</div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-journal">The Lancet Neurology · 2024</div>
+          <div class="pub-title">Global burden of stroke and risk factors, 1990–2021</div>
+          <div class="pub-authors">GBD Research Collaborator Network (including Iradukunda A.)</div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-journal">The Lancet Global Health · 2023</div>
+          <div class="pub-title">Bacterial antimicrobial resistance in the WHO African Region</div>
+          <div class="pub-authors">GBD Research Collaborator Network (including Iradukunda A.)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- ════════════════════════ PAGE: MEMBER — GILDAS ════════════════════════ -->
+<div id="page-member-gildas" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / <span onclick="navigate('team')">Team</span> / Gildas Irakoze</div>
+    </div>
+  </div>
+  <div class="section-wrap">
+    <div class="member-layout">
+      <div class="member-sidebar">
+        <div class="member-avatar-lg">GI</div>
+        <h2>Gildas Irakoze</h2>
+        <div class="creds">MSc, MSc, BSc</div>
+        <div class="role">MEL Specialist & Lead, Social & Economic Unit</div>
+        <div class="sidebar-field"><label>Expertise</label><p>Impact Evaluation · Agricultural Economics · Rural Development · Social Solidarity Economy · Financial Inclusion</p></div>
+        <div class="sidebar-field"><label>Languages</label><p>Kirundi · French · English · Swahili</p></div>
+        <div class="sidebar-field"><label>Experience</label><p>10+ years in international development</p></div>
+        <div class="sidebar-field"><label>Contact</label><p><a href="mailto:info@arnechresearch.com" style="color:var(--gold)">info@arnechresearch.com</a></p></div>
+      </div>
+      <div class="member-content">
+        <h3>Professional Summary</h3>
+        <p>Gildas Irakoze is a seasoned Monitoring, Evaluation and Learning professional with over 10 years of experience in international development, rural economics, and agricultural development. As Lead of ARNECH's Social and Economic Business Unit, he brings a uniquely multidisciplinary perspective to economic analysis, social business models, and sustainable financing across sub-Saharan Africa.</p>
+        <p>A multilingual professional, Gildas has worked across Burundi, East Africa, and francophone West Africa on programmes spanning smallholder agriculture, financial inclusion, poverty reduction, and cooperative economic development. His dual expertise in agricultural business economics and social solidarity economics makes him exceptionally well-placed to bridge micro-level community dynamics with macro development strategies.</p>
+
+        <h3>Education</h3>
+        <div class="edu-item">
+          <div class="edu-degree">MSc in Agricultural Business and Applied Economics</div>
+          <div class="edu-school">Sokoine University of Agriculture, Tanzania</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">MSc in Social Solidarity Economics</div>
+          <div class="edu-school">Université Lyon 2, France</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">BSc in Rural Development</div>
+          <div class="edu-school">University of Burundi</div>
+        </div>
+
+        <h3>Areas of Expertise</h3>
+        <ul class="capability-list">
+          <li>Impact evaluation design and implementation for agriculture and rural development programmes</li>
+          <li>Financial inclusion research — mobile money, savings groups, cooperative finance</li>
+          <li>Value chain analysis for smallholder agriculture</li>
+          <li>Social solidarity economy and cooperative development models</li>
+          <li>Poverty measurement and socio-economic impact assessments</li>
+          <li>Gender-responsive programme design and evaluation</li>
+          <li>Qualitative and mixed-methods research in rural contexts</li>
+        </ul>
+
+        <h3>Selected Publications</h3>
+        <div class="pub-item">
+          <div class="pub-journal">African Economic Research Consortium · 2024</div>
+          <div class="pub-title">Mobile Money in Financial Inclusion in Burundi</div>
+          <div class="pub-authors">Irakoze G.</div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-journal">Individual Publication · 2025</div>
+          <div class="pub-title">Mobile Phone Ownership: Bridging Financial Access for the Unbanked</div>
+          <div class="pub-authors">Irakoze G.</div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-journal">Challenges Journal · 2025</div>
+          <div class="pub-title">COVID-19 Pandemic to Progress: Blended Work for Greener African Cities</div>
+          <div class="pub-authors">Irakoze G. et al.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- ════════════════════════ PAGE: MEMBER — CHEILLA ════════════════════════ -->
+<div id="page-member-cheilla" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / <span onclick="navigate('team')">Team</span> / Cheilla Izere</div>
+    </div>
+  </div>
+  <div class="section-wrap">
+    <div class="member-layout">
+      <div class="member-sidebar">
+        <div class="member-avatar-lg">CI</div>
+        <h2>Cheilla Izere</h2>
+        <div class="creds">MSc, BSc</div>
+        <div class="role">Co-founder & Biostatistician & AI Expert</div>
+        <div class="sidebar-field"><label>Expertise</label><p>Biostatistics · Data Management · Artificial Intelligence · Machine Learning · Statistical Modelling · Global Health</p></div>
+        <div class="sidebar-field"><label>Languages</label><p>Kirundi · French · English</p></div>
+        <div class="sidebar-field"><label>Affiliation</label><p>Carleton University, Canada (2023–2024)</p></div>
+        <div class="sidebar-field"><label>Contact</label><p><a href="mailto:info@arnechresearch.com" style="color:var(--gold)">info@arnechresearch.com</a></p></div>
+      </div>
+      <div class="member-content">
+        <h3>Professional Summary</h3>
+        <p>Cheilla Izere is a Biostatistician, Data Manager, and AI professional with deep expertise in statistical modelling and artificial intelligence applications in global health research. As co-founder and AI lead at ARNECH, she drives the organisation's data science and digital health innovation capabilities.</p>
+        <p>Cheilla's career has spanned academic research institutions and clinical research settings in Canada and France. Her work applies advanced statistical methods and machine learning to complex health datasets, enabling more precise and actionable research insights. She is committed to making data science accessible and impactful in resource-limited settings.</p>
+
+        <h3>Professional Experience</h3>
+        <div class="edu-item">
+          <div class="edu-degree">Data Analyst Researcher</div>
+          <div class="edu-school">Carleton University, Canada · 2023–2024</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">Biostatistician / Data Manager</div>
+          <div class="edu-school">Centre Jean Perrin, France · 2021–2023</div>
+        </div>
+
+        <h3>Education</h3>
+        <div class="edu-item">
+          <div class="edu-degree">Master's in Statistics and Data Processing</div>
+          <div class="edu-school">Université Clermont Auvergne, France</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">Specialised Training in Decision Science and Operations Research</div>
+          <div class="edu-school">Université de Montréal, Canada</div>
+        </div>
+
+        <h3>Areas of Expertise</h3>
+        <ul class="capability-list">
+          <li>Statistical modelling and inference for clinical and health research data</li>
+          <li>Machine learning and deep learning applications in epidemiology</li>
+          <li>Artificial intelligence for health outcome prediction and pattern recognition</li>
+          <li>Data management for clinical trials and observational studies (REDCap, SAS, R, Python)</li>
+          <li>Survival analysis and longitudinal data modelling</li>
+          <li>Natural language processing (NLP) for health text data</li>
+          <li>AI ethics and responsible data science in low-resource settings</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- ════════════════════════ PAGE: UNITS ════════════════════════ -->
+<div id="page-units" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / Research Units</div>
+      <div class="tag">Research Units</div>
+      <h1>Our Specialised<br><em>Research Units</em></h1>
+      <p class="subtitle">Seven interdisciplinary units covering the full spectrum of public health, social science, data science, and digital innovation.</p>
+    </div>
+  </div>
+  <div class="section-wrap">
+    <div class="grid-3">
+      <div class="card"><h3>Monitoring & Evaluation Unit</h3><p>M&E framework development, impact evaluation, and programme assessment. Designs effective systems for routine data collection and analysis aligned to international standards.</p><a class="card-link" onclick="navigate('unit-mel')">Unit details</a></div>
+      <div class="card"><h3>Disease Modelling & Epidemiology Unit</h3><p>Mathematical modelling of infectious diseases — Measles, Malaria, Tuberculosis. Real-time outbreak analysis and epidemic forecasting for public health decision-making.</p><a class="card-link" onclick="navigate('unit-disease')">Unit details</a></div>
+      <div class="card"><h3>Vaccine Research & Evaluation Unit</h3><p>Vaccine effectiveness studies, optimal vaccination strategies, and immunisation programme evaluation for disease control and elimination efforts.</p><a class="card-link" onclick="navigate('unit-vaccine')">Unit details</a></div>
+      <div class="card"><h3>Biostatistics & Data Science Unit</h3><p>Advanced statistical analysis and AI applications in health research. Data management, statistical modelling, and machine learning for global health solutions.</p><a class="card-link" onclick="navigate('unit-biostat')">Unit details</a></div>
+      <div class="card"><h3>Global Health Policy Unit</h3><p>Health systems strengthening, policy analysis, and international health governance. Evidence-based policy recommendations for health sector improvements.</p><a class="card-link" onclick="navigate('unit-policy')">Unit details</a></div>
+      <div class="card"><h3>Digital Health Innovation Unit</h3><p>Digital health solutions, health information systems, and innovative technologies for improving healthcare delivery in resource-limited settings.</p><a class="card-link" onclick="navigate('unit-digital')">Unit details</a></div>
+      <div class="card"><h3>Economic & Social Business Unit</h3><p>Economic analysis, social business development, and sustainable financing models. Financial inclusion, poverty reduction, and socio-economic impact assessments.</p><a class="card-link" onclick="navigate('unit-economic')">Unit details</a></div>
+    </div>
+  </div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- ════════════════════════ UNIT PAGES ════════════════════════ -->
+
+<!-- MEL Unit -->
+<div id="page-unit-mel" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / <span onclick="navigate('units')">Units</span> / Monitoring & Evaluation</div>
+      <div class="tag">Research Unit</div>
+      <h1>Monitoring &<br><em>Evaluation Unit</em></h1>
+      <p class="subtitle">Designing and implementing rigorous M&E systems that transform programme data into evidence for learning and decision-making.</p>
+    </div>
+  </div>
+  <div class="section-wrap"><div class="unit-layout">
+    <div class="unit-meta"><span class="meta-chip">M&E Frameworks</span><span class="meta-chip">Impact Evaluation</span><span class="meta-chip">USAID / WHO Standards</span><span class="meta-chip">Data Systems</span></div>
+    <div class="unit-body">
+      <p>The Monitoring & Evaluation Unit is one of ARNECH's most established divisions, drawing on deep practical experience from major USAID-funded health programmes in Burundi and the wider East African region. The unit specialises in designing fit-for-purpose M&E systems that generate reliable evidence to guide programme management, donor reporting, and policy influence.</p>
+      <p>Led by Nestor Ntakaburimvo, whose career has spanned MEL roles at ICAP Columbia University and Pathfinder International, the unit brings a practitioner's understanding of what M&E looks like under real-world conditions — balancing rigour with feasibility in resource-constrained environments.</p>
+      <h3>Core Capabilities</h3>
+      <ul class="capability-list">
+        <li>M&E framework and results framework development aligned to logic models and theories of change</li>
+        <li>Indicator selection, definition, and data quality assurance systems</li>
+        <li>Baseline, midline, and endline evaluation design and implementation</li>
+        <li>DHIS2 and REDCap database design and management</li>
+        <li>Qualitative process evaluations and most significant change studies</li>
+        <li>Routine data quality assessments (RDQA) and data verification exercises</li>
+        <li>Capacity building for national M&E teams and local implementing partners</li>
+        <li>Performance-based financing and results-based management frameworks</li>
+      </ul>
+      <h3>Sectors Covered</h3>
+      <ul class="capability-list">
+        <li>HIV/AIDS care and treatment (PEPFAR / USAID aligned)</li>
+        <li>Sexual and reproductive health and family planning</li>
+        <li>Maternal, newborn, and child health</li>
+        <li>Nutrition and food security</li>
+        <li>Education and vocational training</li>
+        <li>Agriculture and rural livelihoods</li>
+      </ul>
+    </div>
+  </div></div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- Disease Modelling Unit -->
+<div id="page-unit-disease" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / <span onclick="navigate('units')">Units</span> / Disease Modelling & Epidemiology</div>
+      <div class="tag">Research Unit</div>
+      <h1>Disease Modelling &<br><em>Epidemiology Unit</em></h1>
+      <p class="subtitle">Mathematical modelling and epidemiological analysis to forecast disease trajectories and inform public health responses.</p>
+    </div>
+  </div>
+  <div class="section-wrap"><div class="unit-layout">
+    <div class="unit-meta"><span class="meta-chip">Mathematical Modelling</span><span class="meta-chip">Epidemic Forecasting</span><span class="meta-chip">TB · Malaria · Measles</span><span class="meta-chip">Outbreak Analysis</span></div>
+    <div class="unit-body">
+      <p>The Disease Modelling & Epidemiology Unit applies cutting-edge mathematical and statistical methods to understand and predict the behaviour of infectious diseases in human populations. By developing compartmental models (SIR, SEIR, and their extensions), the unit provides scenario-based analyses that directly inform public health planning, resource allocation, and policy development.</p>
+      <p>Led by Dr. Arnaud Iradukunda, whose Oxford MSc focused specifically on modelling for global health, the unit has active projects on tuberculosis (including the impact of COVID-19 on TB dynamics and the potential of the M72/AS01E vaccine), malaria elimination strategy modelling, and broader epidemiological surveillance work.</p>
+      <h3>Core Capabilities</h3>
+      <ul class="capability-list">
+        <li>Compartmental modelling (SIR/SEIR/SEIRD) for infectious disease dynamics</li>
+        <li>Scenario analysis and counterfactual modelling for intervention planning</li>
+        <li>Real-time outbreak detection and epidemic curve analysis</li>
+        <li>Drug resistance modelling for TB and antimicrobial resistance</li>
+        <li>Epidemiological study design (cohort, cross-sectional, case-control)</li>
+        <li>Global burden of disease analysis and Lancet GBD collaboration</li>
+        <li>Spatial epidemiology and geographic information systems (GIS)</li>
+      </ul>
+      <h3>Active Research Areas</h3>
+      <ul class="capability-list">
+        <li>COVID-19 impact on tuberculosis mortality and drug resistance in Burundi (Harvard University partnership, 2023–2025)</li>
+        <li>Mathematical modelling for malaria control and elimination (2027 and 2030 targets)</li>
+        <li>M72/AS01E vaccine impact on tuberculosis burden — scenario analysis</li>
+      </ul>
+    </div>
+  </div></div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- Vaccine Unit -->
+<div id="page-unit-vaccine" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / <span onclick="navigate('units')">Units</span> / Vaccine Research & Evaluation</div>
+      <div class="tag">Research Unit</div>
+      <h1>Vaccine Research &<br><em>Evaluation Unit</em></h1>
+      <p class="subtitle">Generating evidence on vaccine effectiveness and immunisation strategies to accelerate disease control and elimination.</p>
+    </div>
+  </div>
+  <div class="section-wrap"><div class="unit-layout">
+    <div class="unit-meta"><span class="meta-chip">Vaccine Effectiveness</span><span class="meta-chip">Immunisation Strategy</span><span class="meta-chip">Disease Elimination</span><span class="meta-chip">Policy Modelling</span></div>
+    <div class="unit-body">
+      <p>The Vaccine Research & Evaluation Unit is dedicated to producing rigorous evidence on the effectiveness, impact, and optimal deployment of vaccines in sub-Saharan Africa. Working at the intersection of epidemiology, health economics, and mathematical modelling, the unit evaluates both existing immunisation programmes and emerging vaccine candidates.</p>
+      <p>With infectious diseases like tuberculosis, malaria, and measles imposing enormous burdens on Burundi and the wider region, this unit's work directly contributes to national and regional strategies for disease control and long-term elimination.</p>
+      <h3>Core Capabilities</h3>
+      <ul class="capability-list">
+        <li>Vaccine effectiveness studies using observational and trial data</li>
+        <li>Modelling optimal vaccination coverage thresholds and strategies</li>
+        <li>Immunisation programme evaluation and cold chain performance assessment</li>
+        <li>Health economic modelling of vaccine introduction and cost-effectiveness</li>
+        <li>Scenario modelling of vaccine impact under different coverage and efficacy assumptions</li>
+        <li>Policy briefs and technical reports for national immunisation programmes</li>
+      </ul>
+      <h3>Current Focus</h3>
+      <ul class="capability-list">
+        <li>Mathematical modelling of M72/AS01E tuberculosis vaccine impact in Burundi</li>
+        <li>Measles vaccination coverage analysis and outbreak risk modelling</li>
+        <li>Community-directed ivermectin treatment effectiveness evaluation (East Africa)</li>
+      </ul>
+    </div>
+  </div></div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- Biostat Unit -->
+<div id="page-unit-biostat" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / <span onclick="navigate('units')">Units</span> / Biostatistics & Data Science</div>
+      <div class="tag">Research Unit</div>
+      <h1>Biostatistics &<br><em>Data Science Unit</em></h1>
+      <p class="subtitle">Harnessing statistical rigour and artificial intelligence to unlock insights from complex health data.</p>
+    </div>
+  </div>
+  <div class="section-wrap"><div class="unit-layout">
+    <div class="unit-meta"><span class="meta-chip">Biostatistics</span><span class="meta-chip">Machine Learning</span><span class="meta-chip">AI in Health</span><span class="meta-chip">Data Management</span></div>
+    <div class="unit-body">
+      <p>The Biostatistics & Data Science Unit sits at the technical heart of ARNECH, providing the analytical foundation for all of the organisation's research activities. Led by Cheilla Izere — a trained biostatistician and AI professional with experience at Carleton University (Canada) and Centre Jean Perrin (France) — the unit delivers advanced statistical analysis and cutting-edge AI solutions tailored to health research contexts.</p>
+      <p>The unit is committed to making sophisticated data science accessible and actionable in low- and middle-income country settings, bridging the gap between frontier methodology and practical programme implementation.</p>
+      <h3>Core Capabilities</h3>
+      <ul class="capability-list">
+        <li>Statistical modelling: generalised linear models, mixed-effects models, survival analysis</li>
+        <li>Bayesian analysis and probabilistic modelling</li>
+        <li>Machine learning and deep learning for disease classification and outcome prediction</li>
+        <li>Natural language processing (NLP) for health text and clinical records</li>
+        <li>Clinical trial and observational study data management (REDCap, SAS, R, Python)</li>
+        <li>Data visualisation and interactive dashboard development</li>
+        <li>Data quality frameworks and cleaning pipelines</li>
+        <li>AI ethics review and responsible data use governance</li>
+      </ul>
+    </div>
+  </div></div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- Policy Unit -->
+<div id="page-unit-policy" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / <span onclick="navigate('units')">Units</span> / Global Health Policy</div>
+      <div class="tag">Research Unit</div>
+      <h1>Global Health<br><em>Policy Unit</em></h1>
+      <p class="subtitle">Translating research evidence into health policies that strengthen systems and improve population health outcomes.</p>
+    </div>
+  </div>
+  <div class="section-wrap"><div class="unit-layout">
+    <div class="unit-meta"><span class="meta-chip">Health Systems</span><span class="meta-chip">Policy Analysis</span><span class="meta-chip">International Governance</span><span class="meta-chip">Evidence Synthesis</span></div>
+    <div class="unit-body">
+      <p>The Global Health Policy Unit focuses on the translation of research evidence into actionable health policy at national, regional, and international levels. The unit works with ministries of health, international organisations including WHO, and development agencies to strengthen health governance frameworks and accelerate the adoption of evidence-based interventions.</p>
+      <p>With active partnerships with the Burundi Ministry of Health and WHO Burundi, the unit has direct channels to policy processes, ensuring that ARNECH research findings influence real decisions that affect population health.</p>
+      <h3>Core Capabilities</h3>
+      <ul class="capability-list">
+        <li>Health policy analysis and comparative policy review</li>
+        <li>Health systems strengthening strategies and governance assessments</li>
+        <li>Systematic reviews and evidence synthesis for policy audiences</li>
+        <li>Universal health coverage analysis and financing policy</li>
+        <li>Sexual, reproductive, and maternal health policy development</li>
+        <li>International health governance and treaty obligations analysis</li>
+        <li>Policy brief development and stakeholder engagement facilitation</li>
+      </ul>
+    </div>
+  </div></div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- Digital Unit -->
+<div id="page-unit-digital" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / <span onclick="navigate('units')">Units</span> / Digital Health Innovation</div>
+      <div class="tag">Research Unit</div>
+      <h1>Digital Health<br><em>Innovation Unit</em></h1>
+      <p class="subtitle">Designing and deploying digital solutions that overcome barriers to quality healthcare in resource-limited settings.</p>
+    </div>
+  </div>
+  <div class="section-wrap"><div class="unit-layout">
+    <div class="unit-meta"><span class="meta-chip">mHealth</span><span class="meta-chip">HIS Design</span><span class="meta-chip">Digital Tools</span><span class="meta-chip">DHIS2 · ODK</span></div>
+    <div class="unit-body">
+      <p>The Digital Health Innovation Unit develops and evaluates digital solutions that improve healthcare delivery, strengthen health information systems, and empower communities and providers in resource-limited settings. The unit combines expertise in software design, health informatics, and implementation science to ensure that digital tools are not only technically sound but contextually appropriate and sustainably adopted.</p>
+      <h3>Core Capabilities</h3>
+      <ul class="capability-list">
+        <li>Health information system (HIS) design, customisation, and training (DHIS2, OpenMRS, KoBoToolbox)</li>
+        <li>Mobile health (mHealth) application design and evaluation</li>
+        <li>Electronic health record (EHR) implementation support</li>
+        <li>Digital data collection tool development (ODK, REDCap, CommCare)</li>
+        <li>Interoperability architecture and data exchange standards (HL7 FHIR)</li>
+        <li>Digital health readiness assessments and landscape analyses</li>
+        <li>User-centred design and usability testing for health applications</li>
+      </ul>
+    </div>
+  </div></div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- Economic Unit -->
+<div id="page-unit-economic" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / <span onclick="navigate('units')">Units</span> / Economic & Social Business</div>
+      <div class="tag">Research Unit</div>
+      <h1>Economic &<br><em>Social Business Unit</em></h1>
+      <p class="subtitle">Analysing economic systems, building social enterprises, and developing sustainable financing strategies for development impact.</p>
+    </div>
+  </div>
+  <div class="section-wrap"><div class="unit-layout">
+    <div class="unit-meta"><span class="meta-chip">Economic Analysis</span><span class="meta-chip">Financial Inclusion</span><span class="meta-chip">Social Enterprise</span><span class="meta-chip">Impact Assessment</span></div>
+    <div class="unit-body">
+      <p>The Economic & Social Business Unit, led by Gildas Irakoze, focuses on the intersection of economic development, social entrepreneurship, and sustainable financing in sub-Saharan Africa. The unit undertakes rigorous quantitative and qualitative research to understand how economic systems function for (and against) marginalised communities, and develops practical models to improve financial inclusion and economic resilience.</p>
+      <p>With a particular focus on Burundi and the Great Lakes region, the unit's work spans mobile money and digital finance, cooperative economics, agricultural value chains, and poverty analysis — generating evidence that informs national policy and international development programming.</p>
+      <h3>Core Capabilities</h3>
+      <ul class="capability-list">
+        <li>Financial inclusion research — mobile money, savings groups, microfinance</li>
+        <li>Socio-economic impact assessments for development programmes</li>
+        <li>Agricultural value chain analysis and market systems development</li>
+        <li>Cooperative and social solidarity economy modelling</li>
+        <li>Poverty measurement using multidimensional poverty indices</li>
+        <li>Gender-disaggregated economic analysis and women's economic empowerment</li>
+        <li>Business plan development and social enterprise design for NGOs and cooperatives</li>
+        <li>Cost-benefit and cost-effectiveness analysis for development investments</li>
+      </ul>
+      <h3>Active Research</h3>
+      <ul class="capability-list">
+        <li>Mobile money's role in financial inclusion — gender and location perspectives in Burundi (African Economic Research Consortium, 2024–2025)</li>
+        <li>Greener African cities: remote work and urban economic transition</li>
+      </ul>
+    </div>
+  </div></div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- ════════════════════════ PAGE: PROJECTS ════════════════════════ -->
+<div id="page-projects" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / Projects</div>
+      <div class="tag">Current Projects</div>
+      <h1>Research in<br><em>Progress</em></h1>
+      <p class="subtitle">Active research projects advancing knowledge across tuberculosis, malaria, financial inclusion, and vaccine policy.</p>
+    </div>
+  </div>
+  <div class="section-wrap">
+    <div class="grid-2">
+      <div class="project-card"><div class="project-year">2025</div><div class="project-partner">Harvard University · 2023–2025</div><div class="project-title">COVID-19 Impact on Tuberculosis in Burundi</div><p class="project-desc">Analysing the impact of the COVID-19 pandemic on tuberculosis mortality and drug resistance patterns in Burundi, generating evidence for post-pandemic TB programme recovery strategies.</p></div>
+      <div class="project-card"><div class="project-year">2025</div><div class="project-partner">African Economic Research Consortium · 2024–2025</div><div class="project-title">Financial Inclusion and Mobile Money Research</div><p class="project-desc">Exploring mobile money's role in financial inclusion with gender and location perspectives in Burundi — understanding who benefits and what barriers remain for unbanked populations.</p></div>
+      <div class="project-card"><div class="project-year">2027</div><div class="project-partner">Ongoing</div><div class="project-title">Mathematical Modelling for Malaria Control and Elimination Strategy in Burundi: 2027 and 2030</div><p class="project-desc">Developing mathematical models to inform malaria control and elimination strategies for Burundi, with scenario-based analysis for 2027 and 2030 national targets.</p></div>
+      <div class="project-card"><div class="project-year">2024</div><div class="project-partner">2023–2024</div><div class="project-title">Mathematical Modelling of M72/AS01E Vaccination Impact on Tuberculosis Burden in Burundi</div><p class="project-desc">Developing mathematical models to assess the impact of the M72/AS01E vaccination candidate on tuberculosis burden reduction in Burundi through scenario-based analysis under different coverage and efficacy assumptions.</p></div>
+    </div>
+  </div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- ════════════════════════ PAGE: PUBLICATIONS ════════════════════════ -->
+<div id="page-publications" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / Publications</div>
+      <div class="tag">Publications</div>
+      <h1>Research<br><em>Publications</em></h1>
+      <p class="subtitle">Peer-reviewed publications, working papers, and research contributions from the ARNECH team.</p>
+    </div>
+  </div>
+  <div class="section-wrap">
+    <div class="section-label">2024 – 2025</div>
+    <div class="section-title">Recent <em>Output</em></div>
+    <div class="pub-item"><div class="pub-journal">Individual Publication · 2025</div><div class="pub-title">Mobile Phone Ownership: Bridging Financial Access for the Unbanked</div><div class="pub-authors">Irakoze G. (2025)</div></div>
+    <div class="pub-item"><div class="pub-journal">BMC Infectious Diseases · 2025</div><div class="pub-title">Tuberculosis mortality and drug resistance in Burundi</div><div class="pub-authors">ARNECH Team (2025)</div></div>
+    <div class="pub-item"><div class="pub-journal">Challenges Journal · 2025</div><div class="pub-title">COVID-19 Pandemic to Progress: Blended Work for Greener African Cities</div><div class="pub-authors">Irakoze G. et al. (2025)</div></div>
+    <div class="pub-item"><div class="pub-journal">African Economic Research Consortium · 2024</div><div class="pub-title">Mobile Money in Financial Inclusion in Burundi</div><div class="pub-authors">Irakoze G. (2024)</div></div>
+    <div class="pub-item"><div class="pub-journal">The Lancet Neurology · 2024</div><div class="pub-title">Global burden of stroke and risk factors, 1990–2021</div><div class="pub-authors">GBD Research Collaborator Network (including Iradukunda A.)</div></div>
+    <div class="pub-item"><div class="pub-journal">The Lancet · 2024</div><div class="pub-title">Global mortality and life expectancy analysis</div><div class="pub-authors">GBD Research Collaborator Network (including Iradukunda A.)</div></div>
+    <div class="pub-item"><div class="pub-journal">East African Science Journal · 2024</div><div class="pub-title">Community Directed Ivermectin Treatment in Burundi</div><div class="pub-authors">ARNECH Team (2024)</div></div>
+    <div style="margin-top:3rem">
+    <div class="section-label">2021 – 2023</div>
+    <div class="section-title">Earlier <em>Work</em></div>
+    <div class="pub-item"><div class="pub-journal">The Lancet Global Health · 2023</div><div class="pub-title">Bacterial antimicrobial resistance in the WHO African Region</div><div class="pub-authors">GBD Research Collaborator Network (including Iradukunda A.)</div></div>
+    <div class="pub-item"><div class="pub-journal">BMC Public Health · 2021</div><div class="pub-title">Multidrug-resistant tuberculosis risk factors</div><div class="pub-authors">ARNECH Team (2021)</div></div>
+    <div class="pub-item"><div class="pub-journal">PLOS ONE · 2021</div><div class="pub-title">Hypertension prevalence and risk factors</div><div class="pub-authors">ARNECH Team (2021)</div></div>
+    <div class="pub-item"><div class="pub-journal">Research Preprint · 2022</div><div class="pub-title">Financial inclusion and poverty reduction</div><div class="pub-authors">Irakoze G. (2022)</div></div>
+    </div>
+  </div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- ════════════════════════ PAGE: CAREERS ════════════════════════ -->
+<div id="page-careers" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / Careers</div>
+      <div class="tag">Careers</div>
+      <h1>Join the<br><em>ARNECH Team</em></h1>
+      <p class="subtitle">We seek talented researchers and professionals committed to advancing knowledge and driving innovation in global health and development.</p>
+    </div>
+  </div>
+  <div class="section-wrap">
+    <div class="job-card"><div><div class="job-title">Internship — Global Health</div><div class="job-meta"><span class="job-tag">Burundi / Remote</span><span class="job-tag">Internship</span><span class="job-tag">Open</span></div><p class="job-desc">An opportunity for students in Public Health, Epidemiology, or related fields to gain hands-on experience in health research and statistical analysis. Interns work alongside senior researchers on active projects and develop practical skills in research design, data collection, and analysis.</p></div><div><button class="btn-primary" onclick="navigate('contact')">Apply</button></div></div>
+    <div class="job-card"><div><div class="job-title">Data Scientist — Health Analytics</div><div class="job-meta"><span class="job-tag">Burundi / Remote</span><span class="job-tag">Full-time</span><span class="job-tag">Open</span></div><p class="job-desc">We are looking for an MSc-level data scientist with proficiency in R and Python and experience in statistical modelling. The role involves leading data analysis on health research projects, developing machine learning models, and building data visualisation tools for research outputs and client deliverables.</p></div><div><button class="btn-primary" onclick="navigate('contact')">Apply</button></div></div>
+    <div class="job-card"><div><div class="job-title">M&E Officer</div><div class="job-meta"><span class="job-tag">Burundi</span><span class="job-tag">Full-time</span><span class="job-tag">Open</span></div><p class="job-desc">A BSc/MSc-qualified professional with experience in project evaluation and impact assessment. The M&E Officer will support the design and implementation of monitoring systems, conduct data quality assessments, and contribute to evaluation reports for international donors and government partners.</p></div><div><button class="btn-primary" onclick="navigate('contact')">Apply</button></div></div>
+    <div style="background:var(--light-bg);padding:2.5rem;margin-top:1rem;text-align:center">
+      <div class="section-label">How to apply</div>
+      <p style="font-size:1rem;color:var(--grey);margin:1rem 0">Send your CV and cover letter to <a href="mailto:careers@arnechresearch.com" style="color:var(--crimson);font-weight:500">careers@arnechresearch.com</a></p>
+      <p style="font-size:0.88rem;color:var(--grey)">We review applications on a rolling basis. Early applications are encouraged.</p>
+    </div>
+  </div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<!-- ════════════════════════ PAGE: CONTACT ════════════════════════ -->
+<div id="page-contact" class="page">
+  <div class="inner-hero">
+    <div class="inner-hero-content">
+      <div class="breadcrumb"><span onclick="navigate('home')">Home</span> / Contact</div>
+      <div class="tag">Contact</div>
+      <h1>Get in<br><em>Touch</em></h1>
+      <p class="subtitle">Whether you have a research question, consulting need, or partnership proposal — we'd love to hear from you.</p>
+    </div>
+  </div>
+  <div class="contact-section" style="padding-top:3rem">
+    <div class="contact-inner">
+      <div>
+        <div class="section-label" style="color:var(--gold)">Contact details</div>
+        <div class="contact-detail" style="margin-top:1.5rem">
+          <div><strong>General Enquiries</strong><a href="mailto:info@arnechresearch.com">info@arnechresearch.com</a></div>
+          <div><strong>Careers</strong><a href="mailto:careers@arnechresearch.com">careers@arnechresearch.com</a></div>
+          <div><strong>Burundi Office</strong><a href="tel:+25771687829">+257 71687829</a></div>
+          <div><strong>England Office</strong><a href="tel:+447476577629">+44 74765776 29</a></div>
+          <div><strong>Address</strong><span style="color:rgba(255,255,255,0.7)">Bujumbura, Rohero, No 503<br>Premium House (ECOBANK Burundi HQ)<br>Burundi</span></div>
+          <div><strong>Business Hours</strong><span style="color:rgba(255,255,255,0.7)">Mon–Fri: 8:00 AM – 6:00 PM<br>Saturday: 10:00 AM – 3:00 PM</span></div>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="handleForm(event)">
+        <input type="text" placeholder="Your Name *" required>
+        <input type="email" placeholder="Email Address *" required>
+        <input type="text" placeholder="Organisation">
+        <input type="text" placeholder="Subject">
+        <textarea placeholder="Tell us about your research or consulting needs…" required></textarea>
+        <button type="submit" class="btn-primary">Send Message</button>
+      </form>
+    </div>
+  </div>
+  <footer><p>&copy; 2025 ARNECH Research and Consulting. All rights reserved.</p></footer>
+</div>
+
+<script>
+  function navigate(pageId) {
+    // hide all pages
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    // show target
+    const target = document.getElementById('page-' + pageId);
+    if (target) { target.classList.add('active'); }
+    // update nav active state
+    document.querySelectorAll('nav a').forEach(a => {
+      a.classList.remove('active');
+      if (a.dataset.page === pageId) a.classList.add('active');
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function handleForm(e) {
+    e.preventDefault();
+    alert('Thank you for your message! We will get back to you within 24 hours.');
+    e.target.reset();
+  }
+
+  // Set home nav active on load
+  document.querySelector('[data-page="home"]').classList.add('active');
+</script>
+</body>
+</html>
